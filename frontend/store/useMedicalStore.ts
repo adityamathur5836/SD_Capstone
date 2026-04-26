@@ -183,6 +183,7 @@ interface MedicalState {
     updateSample: (id: string, updates: Partial<SyntheticSample>) => void;
     addSamples: (samples: SyntheticSample[]) => void;
     setAnalytics: (analytics: AnalyticsMetrics) => void;
+    fetchAnalytics: () => Promise<void>;
     setTrainingProgress: (progress: TrainingMetrics) => void;
     setGenerating: (isGenerating: boolean) => void;
     setTraining: (isTraining: boolean) => void;
@@ -335,6 +336,16 @@ export const useMedicalStore = create<MedicalState>()(
                 samples: [...state.samples, ...newSamples]
             })),
             setAnalytics: (analytics: AnalyticsMetrics) => set({ analytics }),
+            fetchAnalytics: async () => {
+                const { token } = useMedicalStore.getState();
+                if (token) medicalApi.setAuthToken(token);
+                try {
+                    const analytics = await medicalApi.getAnalytics();
+                    set({ analytics });
+                } catch (error) {
+                    console.error("Failed to fetch analytics:", error);
+                }
+            },
             setTrainingProgress: (progress: TrainingMetrics) => set({ trainingProgress: progress }),
             setGenerating: (isGenerating: boolean) => set({ isGenerating }),
             setTraining: (isTraining: boolean) => set({ isTraining }),
