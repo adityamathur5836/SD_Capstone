@@ -7,7 +7,7 @@ import {
     Dataset
 } from '../types/medical';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '<http://localhost:5000/api/v1>';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
@@ -93,11 +93,7 @@ export const medicalApi = {
         const formData = new FormData();
         files.forEach(file => formData.append('files', file));
 
-        const response = await apiClient.post('/upload', formData, {
-            headers: {
-                'Content-Type': 'undefined', // Force browser to set boundary
-            },
-        });
+        const response = await apiClient.post('/upload', formData);
         return response.data;
     },
 
@@ -105,7 +101,7 @@ export const medicalApi = {
     getTrainingStreamUrl: () => `${API_BASE_URL}/train`,
 
     getHealth: async () => {
-        const response = await apiClient.get('/health', { baseURL: '<http://localhost:5000/api/v1>' });
+        const response = await apiClient.get('/health', { baseURL: 'http://localhost:5000/api/v1' });
         return response.data;
     }
 };

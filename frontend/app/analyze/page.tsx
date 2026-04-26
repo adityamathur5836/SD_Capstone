@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import dynamic_loader from 'next/dynamic';
 import { LayoutGrid, Microscope, ShieldCheck as EthicsShield, FileText, Download, Info, BarChart3, PieChart, ShieldAlert, TrendingUp } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMedicalStore } from '@/store/useMedicalStore';
 import MetricCard from '@/components/metrics/MetricCard';
 import PrivacyGauge from '@/components/metrics/PrivacyGauge';
@@ -17,9 +17,13 @@ const BiasRadarChart = dynamic_loader(() => import('@/components/analytics/BiasR
 const MitigationPanel = dynamic_loader(() => import('@/components/analytics/MitigationPanel'), { ssr: false });
 
 export default function AnalyzePage() {
-  const { analytics } = useMedicalStore();
+  const { analytics, fetchAnalytics } = useMedicalStore();
   const [drillDownMetric, setDrillDownMetric] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'executive' | 'research' | 'ethics'>('executive');
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   const handleOpenDrillDown = (title: string) => {
     setDrillDownMetric(title);
