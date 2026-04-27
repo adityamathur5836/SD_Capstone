@@ -72,7 +72,7 @@ class JobController {
         res.setHeader('Content-Type', 'text/event-stream');
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
-        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.flushHeaders(); // Required to send headers immediately and keep the connection open
 
         let epoch = 0;
         const maxEpochs = 320;
