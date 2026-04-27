@@ -1,5 +1,7 @@
 // OOP: Singleton Pattern — Server lifecycle wrapped in a class
+require('dotenv').config();
 const express = require('express');
+
 const cors = require('cors');
 const apiRoutes = require('./routes/apiRoutes');
 
@@ -40,5 +42,6 @@ class MedSynthServer {
 }
 
 // Single entry point
-const server = new MedSynthServer(5000);
+const PORT = process.env.PORT || 5000;
+const server = new MedSynthServer(PORT);
 server.start();

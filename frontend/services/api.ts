@@ -101,7 +101,7 @@ export const medicalApi = {
     getTrainingStreamUrl: () => `${API_BASE_URL}/train`,
 
     getHealth: async () => {
-        const response = await apiClient.get('/health', { baseURL: 'http://localhost:5001/api/v1' });
+        const response = await apiClient.get('/health', { baseURL: API_BASE_URL });
         return response.data;
     }
 };
