@@ -13,7 +13,9 @@ class MedSynthServer {
     }
 
     _configureMiddleware() {
-        this.app.use(cors({ origin: '*', credentials: true }));
+        // origin: true allows the middleware to dynamically set Access-Control-Allow-Origin
+        // to the request's origin, which is required when credentials: true is used.
+        this.app.use(cors({ origin: true, credentials: true }));
         this.app.use(express.json());
     }
 
@@ -29,9 +31,10 @@ class MedSynthServer {
     }
 
     start() {
-        this.app.listen(this.port, () => {
-            console.log(`[MedSynth Backend] Running on port ${this.port}`);
-            console.log(`[MedSynth Routing] MVC Architecture loaded.`);
+        const PORT = process.env.PORT || 5001;
+        this.app.listen(PORT, () => {
+            console.log(`[Backend] MedSynth Server listening on port ${PORT}`);
+            console.log(`[Backend] API Contract Initialized.`);
         });
     }
 }

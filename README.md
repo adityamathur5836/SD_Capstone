@@ -6,6 +6,8 @@ MedSynth is a **privacy-first synthetic medical data generation platform** built
 
 By removing the regulatory bottlenecks of accessing real hospital data, MedSynth enables faster, more equitable medical AI innovation.
 
+📖 **Read the Full Technical Report:** [MedSynth Project Report (PDF)](./MedSynth_Report.pdf)
+
 ---
 
 ## Features
